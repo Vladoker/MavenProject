@@ -91,27 +91,32 @@ public class MainFrame extends javax.swing.JFrame {
        AddDialog modal = new AddDialog(this, true);
        modal.setVisible(true);
        
-       
-       
       this.name = modal.getName();
       this.surname = modal.getSurname();
       
+      if(!this.name.isEmpty()) {
+          
       DefaultTableModel defaultTableModel = (DefaultTableModel) this.jTable1.getModel();
       Object[] arrObj = new Object[] { name, surname , modal.getGender(), modal.getDate(),
       modal.getSalary(), modal.getAddress() };
-      
-      
-      if(!this.name.isEmpty()) {
-          defaultTableModel.addRow(arrObj);
-          employeeManager.addEmployee(arrObj);       
-      }
+         
+      defaultTableModel.addRow(arrObj); //defaultTableModel.insertRow()
+      employeeManager.addEmployee(arrObj);       
+    }
       
       
       
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeliteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeliteActionPerformed
-        // TODO add your handling code here:
+         int selectedRow = this.jTable1.getSelectedRow();
+         if(selectedRow != -1){
+             DefaultTableModel defaultTableModel = (DefaultTableModel) this.jTable1.getModel();
+           String name = (String) defaultTableModel.getValueAt(selectedRow, 0);
+           String surname = (String) defaultTableModel.getValueAt(selectedRow, 1);
+           defaultTableModel.removeRow(selectedRow);
+           employeeManager.deleteEmployee(name + " " + surname);
+         }        
     }//GEN-LAST:event_btnDeliteActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -119,15 +124,19 @@ public class MainFrame extends javax.swing.JFrame {
         if(selectedRow != -1) {
             DefaultTableModel defaultTableModel = (DefaultTableModel) this.jTable1.getModel();
             String[] valuesRow = new String[6];
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < valuesRow.length; i++) {
                 valuesRow[i] = (String) defaultTableModel.getValueAt(selectedRow, i);//позиция каждого столбца
             }
-            EditDialog editDialog = new EditDialog(this, true);
-            editDialog.setValuesRow(valuesRow);
+            EditDialog editDialog = new EditDialog(this, true, valuesRow);
+                      
             editDialog.setVisible(true);
             
-            defaultTableModel.insertRow(selectedRow, editDialog.getValuesRow());
-                          
+            for (int i = 0; i < valuesRow.length; i++) {
+                defaultTableModel.setValueAt(valuesRow[i], selectedRow, i);
+            }
+            if(employeeManager.deleteEmployee(editDialog.getOldUser())){
+                employeeManager.addEmployee(valuesRow);
+            }
         }
     }//GEN-LAST:event_btnEditActionPerformed
 

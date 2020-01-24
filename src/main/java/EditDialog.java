@@ -2,13 +2,15 @@
 public class EditDialog extends javax.swing.JDialog {
 
     private String[] valuesRow;
+    private String oldData; 
     /**
      * Creates new form EditDialog
      */
-    public EditDialog(java.awt.Frame parent, boolean modal) {
+    public EditDialog(java.awt.Frame parent, boolean modal, String[] valuesRow) {
         super(parent, modal);
         initComponents();
-        selectedValues();
+        this.valuesRow = valuesRow;           
+        this.selectedValues();
     }
     
     public void setValuesRow(String[] values){
@@ -17,13 +19,18 @@ public class EditDialog extends javax.swing.JDialog {
     public String[] getValuesRow() {
         return this.valuesRow;
     }
+    public String getOldUser(){
+        return this.oldData;
+    }
     
     private void selectedValues() {
         this.NameTextField.setText(valuesRow[0]);
         this.SurnameTextField.setText(valuesRow[1]);
         this.DataTextField.setText(valuesRow[3]);
         this.SalaryTextField.setText(valuesRow[4]);
-        this.AddresTextField.setText(valuesRow[5]);                      
+        this.AddresTextField.setText(valuesRow[5]); 
+        
+        this.oldData = valuesRow[0] + " " + valuesRow[1];
     }
 
     /**
@@ -50,6 +57,7 @@ public class EditDialog extends javax.swing.JDialog {
         DataTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocation(new java.awt.Point(600, 350));
 
         jLabel4.setText("Salary");
 
@@ -200,10 +208,11 @@ public class EditDialog extends javax.swing.JDialog {
 
             this.valuesRow[0] = this.NameTextField.getText();
             this.valuesRow[1] = this.SurnameTextField.getText();
-            this.valuesRow[2] = jCheckBoxMale.isSelected() ? "Male" : "Female";
-            this.valuesRow[3] = DataTextField.getText();
-            this.valuesRow[4] = SalaryTextField.getText();
-            this.valuesRow[5] = AddresTextField.getText();
+            this.valuesRow[2] = this.jCheckBoxMale.isSelected() ? "Male" : "Female";
+            this.valuesRow[3] = this.DataTextField.getText();
+            this.valuesRow[4] = this.SalaryTextField.getText();
+            this.valuesRow[5] = this.AddresTextField.getText();
+            
             
             this.setVisible(false);
         }
