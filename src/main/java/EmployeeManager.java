@@ -31,7 +31,7 @@ public class EmployeeManager {
             String[] mas = Arrays.copyOf(obj, obj.length, String[].class);
 
             try {
-                Gender s = mas[2].equals("Male") ? Gender.MALE : Gender.FEMALE;
+                Gender s = mas[2].equalsIgnoreCase("Male") ? Gender.MALE : Gender.FEMALE;
                 
                 String[] date = mas[3].split("\\.");
 

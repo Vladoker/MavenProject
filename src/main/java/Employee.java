@@ -33,7 +33,12 @@ public class Employee {
     public String getAddress(){
         return this.address;
     }
+    public String getDateStringFormat(){
+        return String.format("%s.%s.%s",date.get(Calendar.DAY_OF_MONTH),
+                (date.get(Calendar.MONTH) +1),date.get(Calendar.YEAR));
+    }
 
+    
     public String toString() {
         return "Name: " + name + "\r\nSurname: " + surname + "\r\nSex: " + sex.toString() + "\r\nAddress: " + address + "\r\nSalary: " + salary +
                "\r\nДень: " +  date.get(Calendar.DAY_OF_MONTH) + " Месяц: " + (date.get(Calendar.MONTH) +1) + " Год: " + date.get(Calendar.YEAR);

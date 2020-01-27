@@ -1,4 +1,3 @@
-
 import javax.swing.table.DefaultTableModel;
 
 public class MainFrame extends javax.swing.JFrame {
@@ -13,6 +12,17 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         employeeManager = EmployeeManager.getInstance();
         dao = new ValueDao();
+        this.empLoader();
+    }
+    
+    public void empLoader() {     
+        DefaultTableModel defaultTableModel = (DefaultTableModel) this.jTable1.getModel();
+        
+        for(Employee emp : dao.getAll()){
+            Object[] obj = new Object[]{ emp.getName(), emp.getSurname(),
+            emp.getSex().toString(), emp.getDateStringFormat(), String.valueOf(emp.getSalary()), emp.getAddress() };
+            defaultTableModel.addRow(obj);
+        }            
     }
 
 
@@ -138,8 +148,9 @@ public class MainFrame extends javax.swing.JFrame {
             for (int i = 0; i < valuesRow.length; i++) {
                 defaultTableModel.setValueAt(valuesRow[i], selectedRow, i);
             }
+            dao.edit(editDialog.getOldUser(), valuesRow);
             if(employeeManager.deleteEmployee(editDialog.getOldUser())){
-                employeeManager.addEmployee(valuesRow);
+                employeeManager.addEmployee(valuesRow);                
             }
         }
     }//GEN-LAST:event_btnEditActionPerformed
