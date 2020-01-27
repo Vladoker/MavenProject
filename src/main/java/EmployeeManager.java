@@ -25,7 +25,7 @@ public class EmployeeManager {
         return list.size();
     }
 
-    public void addEmployee(Object[] obj) {
+    public Employee addEmployee(Object[] obj) {
 
         try {
             String[] mas = Arrays.copyOf(obj, obj.length, String[].class);
@@ -40,8 +40,10 @@ public class EmployeeManager {
                 int y = Integer.parseInt(date[2]);
                 double salary = Double.parseDouble(mas[4]);
 
-                list.add(new Employee(mas[0], mas[1], s, d, m, y, mas[5], salary));
-
+                Employee emp = new Employee(mas[0], mas[1], s, d, m, y, mas[5], salary);
+                list.add(emp);
+                
+                return emp;
                 
             } catch (Exception ex) {
                 System.out.println(ex);
@@ -50,6 +52,7 @@ public class EmployeeManager {
         } catch (Exception ex) {
             System.out.println(ex);
         }
+        return null;
     }
 
     public void showEmployee() {

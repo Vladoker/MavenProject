@@ -27,6 +27,12 @@ public class Employee {
     public Gender getSex() {
         return sex;
     }
+    public double getSalary(){
+        return this.salary;
+    }
+    public String getAddress(){
+        return this.address;
+    }
 
     public String toString() {
         return "Name: " + name + "\r\nSurname: " + surname + "\r\nSex: " + sex.toString() + "\r\nAddress: " + address + "\r\nSalary: " + salary +

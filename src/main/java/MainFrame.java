@@ -3,6 +3,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class MainFrame extends javax.swing.JFrame {
     EmployeeManager employeeManager;
+    ValueDao dao;
     
      private String name;
      private String surname;
@@ -11,6 +12,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         employeeManager = EmployeeManager.getInstance();
+        dao = new ValueDao();
     }
 
 
@@ -101,7 +103,8 @@ public class MainFrame extends javax.swing.JFrame {
       modal.getSalary(), modal.getAddress() };
          
       defaultTableModel.addRow(arrObj); //defaultTableModel.insertRow()
-      employeeManager.addEmployee(arrObj);       
+      Employee emp = employeeManager.addEmployee(arrObj);    
+      dao.add(emp);
     }
       
       
@@ -116,6 +119,7 @@ public class MainFrame extends javax.swing.JFrame {
            String surname = (String) defaultTableModel.getValueAt(selectedRow, 1);
            defaultTableModel.removeRow(selectedRow);
            employeeManager.deleteEmployee(name + " " + surname);
+           dao.remove(name, surname);
          }        
     }//GEN-LAST:event_btnDeliteActionPerformed
 
